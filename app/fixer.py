@@ -29,7 +29,11 @@ STEP_TIMEOUT = 180  # seconds per external command
 
 
 class FixError(Exception):
-    """A problem we can explain to the user."""
+    """A problem we can explain to the user. `reason` is a short code for the stats page."""
+
+    def __init__(self, message: str, reason: str = "other"):
+        super().__init__(message)
+        self.reason = reason
 
 
 @dataclass
@@ -44,7 +48,7 @@ def _run(cmd: list[str], timeout: int = STEP_TIMEOUT) -> subprocess.CompletedPro
     try:
         return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
     except subprocess.TimeoutExpired as e:
-        raise FixError("This PDF took too long to process. Try a smaller file.") from e
+        raise FixError("This PDF took too long to process. Try a smaller file.", "timeout") from e
 
 
 def check_tools() -> list[str]:
@@ -85,21 +89,21 @@ def fix_pdf(src: Path, workdir: Path, preset: str = DEFAULT_PRESET,
 
     with open(src, "rb") as f:
         if b"%PDF" not in f.read(1024):
-            raise FixError("This doesn't look like a PDF file.")
+            raise FixError("This doesn't look like a PDF file.", "not_pdf")
 
     # 1. Repair structure (qpdf exit code 3 = repaired with warnings, which is fine)
     repaired = workdir / "1_repaired.pdf"
     r = _run(["qpdf", "--decrypt", str(src), str(repaired)])
     if r.returncode not in (0, 3) or not repaired.exists():
         if "password" in (r.stderr or "").lower():
-            raise FixError("This PDF is password-protected. Remove the password and try again.")
-        raise FixError("This PDF is too damaged to read.")
+            raise FixError("This PDF is password-protected. Remove the password and try again.", "password")
+        raise FixError("This PDF is too damaged to read.", "damaged")
 
     pages = page_count(repaired)
     if pages == 0:
-        raise FixError("This PDF has no pages we can read.")
+        raise FixError("This PDF has no pages we can read.", "damaged")
     if pages > max_pages:
-        raise FixError(f"This PDF has {pages} pages; the limit is {max_pages}.")
+        raise FixError(f"This PDF has {pages} pages; the limit is {max_pages}.", "too_many_pages")
 
     # 2. Ghostscript rewrite
     rewritten = workdir / "2_gs.pdf"
@@ -121,14 +125,14 @@ def fix_pdf(src: Path, workdir: Path, preset: str = DEFAULT_PRESET,
     gs.append(str(repaired))
     r = _run(gs)
     if r.returncode != 0 or not rewritten.exists() or rewritten.stat().st_size == 0:
-        raise FixError("We couldn't rebuild this PDF. Please send it to us so we can improve the fix.")
+        raise FixError("We couldn't rebuild this PDF. Please send it to us so we can improve the fix.", "rebuild_failed")
 
     # 3. Final structural clean-up
     final = workdir / "fixed.pdf"
     r = _run(["qpdf", "--object-streams=disable", f"--force-version={version}",
               str(rewritten), str(final)])
     if r.returncode not in (0, 3) or not final.exists():
-        raise FixError("We couldn't finish rebuilding this PDF.")
+        raise FixError("We couldn't finish rebuilding this PDF.", "rebuild_failed")
 
     # 4. Previews
     before = _preview(repaired, workdir / "before")

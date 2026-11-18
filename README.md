@@ -56,7 +56,14 @@ and put Caddy or Nginx in front for HTTPS.
 | `FILE_TTL_SECONDS` | 3600 | Files deleted after this many seconds |
 | `MAX_PARALLEL` | 2 | Fixes running at the same time (raise on bigger servers) |
 | `MAX_PAGES` | 300 | Largest page count |
-| `DATA_DIR` | ./data | Where `feedback.jsonl` ("Did it open?" answers) is saved |
+| `DATA_DIR` | ./data | Where `events.jsonl` (usage counts) and `feedback.jsonl` are saved |
+| `STATS_PASSWORD` / `STATS_PASSWORD_FILE` | – / `/etc/corelpdftools/stats-password` | Password for the private `/stats` page (any username). No password set = page disabled |
+
+## Where to see visitors and usage
+
+- **Visitors:** https://corelpdftools.goatcounter.com
+- **Usage (PDFs fixed, failures, "Did it open?"):** https://corelpdftools.com/stats — password is in `/etc/corelpdftools/stats-password` on the server
+- **Google searches:** Google Search Console, property `corelpdftools.com`
 
 ## How the fix works
 
@@ -72,7 +79,6 @@ qpdf --object-streams=disable --force-version=1.4 out.pdf fixed.pdf
 
 ## Before launch
 
-- [ ] Replace `hello@example.com` in `privacy.html` with a real contact email
 - [ ] Review the privacy page and add terms of use
 - [ ] Licence: Ghostscript is AGPL. Simplest route is to keep this repo public under AGPL-3.0; otherwise buy a commercial licence from Artifex. Not legal advice.
 - [ ] Brand name: "Corel" and "CorelDRAW" are trademarks of their owner. Saying the tool works *with* CorelDRAW is generally fine; using "Corel" in the brand/domain carries more risk.

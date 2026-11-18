@@ -18,12 +18,14 @@ from collections import defaultdict
 from datetime import date
 from pathlib import Path
 
-from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.concurrency import run_in_threadpool
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
+from . import stats
 from .fixer import DEFAULT_PRESET, PRESETS, FixError, check_tools, fix_pdf
 
 # ---------- settings ----------
@@ -39,6 +41,7 @@ MAX_PAGES = int(os.getenv("MAX_PAGES", "300"))
 JOBS_DIR.mkdir(parents=True, exist_ok=True)
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 STATIC_DIR = Path(__file__).parent / "static"
+stats.init(DATA_DIR)
 JOB_ID_RE = re.compile(r"^[0-9a-f]{32}$")
 
 app = FastAPI(title=APP_NAME, docs_url=None, redoc_url=None)
@@ -127,6 +130,7 @@ async def fix(request: Request, file: UploadFile = File(...),
               preset: str = Form(DEFAULT_PRESET), keep_text: bool = Form(False)):
     ip = client_ip(request)
     if not take_free_slot(ip):
+        stats.log_event("limit_hit")
         return JSONResponse(status_code=429, content={
             "error": f"You've used today's {FREE_DAILY_LIMIT} free fixes. Come back tomorrow, or upgrade for unlimited fixes."})
 
@@ -142,10 +146,10 @@ async def fix(request: Request, file: UploadFile = File(...),
             while chunk := await file.read(1024 * 1024):
                 size += len(chunk)
                 if size > limit:
-                    raise FixError(f"This file is bigger than {MAX_UPLOAD_MB} MB.")
+                    raise FixError(f"This file is bigger than {MAX_UPLOAD_MB} MB.", "too_big")
                 out.write(chunk)
         if size == 0:
-            raise FixError("The file is empty.")
+            raise FixError("The file is empty.", "empty")
 
         async with _slots:
             result = await run_in_threadpool(fix_pdf, src, d, preset, keep_text, MAX_PAGES)
@@ -153,6 +157,8 @@ async def fix(request: Request, file: UploadFile = File(...),
 
         name = f"{safe_stem(file.filename)}_CorelDRAW.pdf"
         (d / "meta.json").write_text(json.dumps({"name": name, "preset": preset, "keep_text": keep_text}))
+        stats.log_event("fix_ok", preset=preset, keep_text=keep_text, pages=result.pages,
+                        size_mb=round(size / 1048576, 1))
         return {
             "job_id": job_id,
             "pages": result.pages,
@@ -163,10 +169,12 @@ async def fix(request: Request, file: UploadFile = File(...),
             "expires_in_minutes": FILE_TTL_SECONDS // 60,
         }
     except FixError as e:
+        stats.log_event("fix_fail", preset=preset, reason=getattr(e, "reason", "other"))
         shutil.rmtree(d, ignore_errors=True)
         give_back_slot(ip)  # a failed fix doesn't use up a free slot
         return JSONResponse(status_code=422, content={"error": str(e)})
     except Exception:
+        stats.log_event("fix_fail", preset=preset, reason="server_error")
         shutil.rmtree(d, ignore_errors=True)
         give_back_slot(ip)
         return JSONResponse(status_code=500, content={"error": "Something went wrong on our side. Please try again."})
@@ -204,7 +212,21 @@ def feedback(fb: Feedback):
            "corel_version": (fb.corel_version or "")[:40], "note": (fb.note or "")[:500]}
     with open(DATA_DIR / "feedback.jsonl", "a") as f:
         f.write(json.dumps(row) + "\n")
+    stats.log_event("feedback", opened=fb.opened, preset=row["corel_version"] or None)
     return {"ok": True}
+
+
+# ---------- private stats page ----------
+_basic = HTTPBasic(auto_error=False)
+
+
+@app.get("/stats", response_class=HTMLResponse, include_in_schema=False)
+def stats_page(days: int = 30, creds: HTTPBasicCredentials | None = Depends(_basic)):
+    if stats.stats_password() is None:
+        raise HTTPException(404, "Not found")
+    if creds is None or not stats.check_password(creds.password):
+        raise HTTPException(401, "Password required", headers={"WWW-Authenticate": 'Basic realm="CorelPDFtools stats"'})
+    return stats.render(max(1, min(days, 365)))
 
 
 # ---------- website ----------

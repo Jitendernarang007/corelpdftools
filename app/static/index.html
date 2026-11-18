@@ -10,6 +10,15 @@
 <meta property="og:description" content="Fix PDFs that CorelDRAW won't import. Real vectors, CMYK kept, files deleted in 1 hour.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://corelpdftools.com/">
+<meta property="og:site_name" content="CorelPDFtools">
+<meta property="og:image" content="https://corelpdftools.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CorelDRAW says your PDF is corrupted? Fix it in seconds. Real vectors, CMYK kept, free.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fix PDF for CorelDRAW – free online tool">
+<meta name="twitter:description" content="Fix PDFs that CorelDRAW won't import. Real vectors, CMYK kept, files deleted in 1 hour.">
+<meta name="twitter:image" content="https://corelpdftools.com/og-image.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e3262e'/><path d='M9 22V10h7a4 4 0 010 8h-7' fill='none' stroke='white' stroke-width='3'/></svg>">
 <style>
   :root{--red:#e3262e;--ink:#16181d;--muted:#5b6170;--line:#e4e6eb;--bg:#f7f8fa;--ok:#1a7f45;--card:#fff}
@@ -61,6 +70,13 @@
   footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center;padding:24px 20px}
   @media(max-width:600px){.cmp{grid-template-columns:1fr}nav{display:none}}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"CorelPDFtools","url":"https://corelpdftools.com/",
+ "description":"Free online tool that fixes PDFs CorelDRAW won't open or says are corrupted. Rebuilds the PDF with text as curves, keeps CMYK colours and real vectors.",
+ "applicationCategory":"DesignApplication","operatingSystem":"Any (web browser)","browserRequirements":"Requires JavaScript",
+ "offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"image":"https://corelpdftools.com/og-image.jpg",
+ "publisher":{"@type":"Organization","name":"CorelPDFtools","url":"https://corelpdftools.com/","email":"support@corelpdftools.com"}}
+</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
  {"@type":"Question","name":"Why does CorelDRAW say my PDF is corrupted?","acceptedAnswer":{"@type":"Answer","text":"CorelDRAW's PDF import is stricter than PDF viewers. Embedded fonts, newer PDF features or files edited by other tools often trigger the error, even when the PDF opens fine in a browser. Rebuilding the PDF in a simpler format with text as curves fixes most of them."}},
@@ -143,7 +159,7 @@
   <details><summary>Are my files safe?</summary><p>Files are processed automatically, never shared or used for anything else, and deleted within 1 hour.</p></details>
 </main>
 
-<footer>© <span id="yr"></span> CorelPDFtools · Not affiliated with Corel or Alludo. CorelDRAW is a trademark of its owner. · <a href="/privacy.html">Privacy</a></footer>
+<footer>© <span id="yr"></span> CorelPDFtools · Not affiliated with Corel or Alludo. CorelDRAW is a trademark of its owner. · <a href="/privacy.html">Privacy</a> · <a href="mailto:support@corelpdftools.com">support@corelpdftools.com</a></footer>
 
 <script>
 const $ = id => document.getElementById(id);
@@ -202,8 +218,9 @@ $('fb').addEventListener('click', async e => {
   fetch('/api/feedback', { method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ job_id: jobId, opened: ok, corel_version: $('preset').value }) }).catch(() => {});
   $('fb').innerHTML = ok ? 'Thanks! Glad it worked.' :
-    'Sorry about that. Try the setting for an older CorelDRAW version, or email the file to us so we can improve the fix.';
+    'Sorry about that. Try the setting for an older CorelDRAW version, or email the file to <a href="mailto:support@corelpdftools.com">support@corelpdftools.com</a> so we can improve the fix.';
 });
 </script>
+<script data-goatcounter="https://corelpdftools.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
