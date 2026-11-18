@@ -108,6 +108,13 @@ def fix_pdf(src: Path, workdir: Path, preset: str = DEFAULT_PRESET,
           "-dPDFSETTINGS=/prepress",
           "-sColorConversionStrategy=LeaveColorUnchanged",
           "-dUseCropBox", "-dAutoRotatePages=/None",
+          # Print files: keep every image exactly as it is - no downsampling,
+          # no re-compression of lossless images into JPEG.
+          "-dDownsampleColorImages=false", "-dDownsampleGrayImages=false",
+          "-dDownsampleMonoImages=false",
+          "-dAutoFilterColorImages=false", "-dColorImageFilter=/FlateEncode",
+          "-dAutoFilterGrayImages=false", "-dGrayImageFilter=/FlateEncode",
+          "-dPassThroughJPEGImages=true",
           f"-sOutputFile={rewritten}"]
     if not keep_text:
         gs.insert(5, "-dNoOutputFonts")  # all text becomes curves
