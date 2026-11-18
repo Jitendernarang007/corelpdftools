@@ -1,5 +1,7 @@
 # CorelPDFtools
 
+Live at **https://corelpdftools.com**
+
 A website that fixes PDFs CorelDRAW won't open ("The file is corrupted"). Upload a PDF, download a CorelDRAW-ready copy:
 
 - rebuilt as PDF 1.4 (1.6 for CorelDRAW 2021+)
@@ -70,7 +72,7 @@ qpdf --object-streams=disable --force-version=1.4 out.pdf fixed.pdf
 
 ## Before launch
 
-- [ ] Replace `https://example.com/` (canonical link in `index.html`) and `hello@example.com` (`privacy.html`) with your domain and email
+- [ ] Replace `hello@example.com` in `privacy.html` with a real contact email
 - [ ] Review the privacy page and add terms of use
 - [ ] Licence: Ghostscript is AGPL. Simplest route is to keep this repo public under AGPL-3.0; otherwise buy a commercial licence from Artifex. Not legal advice.
 - [ ] Brand name: "Corel" and "CorelDRAW" are trademarks of their owner. Saying the tool works *with* CorelDRAW is generally fine; using "Corel" in the brand/domain carries more risk.
