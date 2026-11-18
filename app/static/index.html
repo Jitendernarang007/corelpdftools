@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fix PDF for CorelDRAW – "File is corrupted" error fixed in seconds | CorelPDFtools</title>
+<meta name="description" content="CorelDRAW says your PDF is corrupted? Upload it and download a CorelDRAW-ready PDF in seconds. Real vectors, CMYK colours kept, works with CorelDRAW X4 to 2024. Free.">
+<link rel="canonical" href="https://pdftools.cipheredgemedia.com/">
+<meta property="og:title" content="Fix PDF for CorelDRAW – free online tool">
+<meta property="og:description" content="Fix PDFs that CorelDRAW won't import. Real vectors, CMYK kept, files deleted in 1 hour.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e3262e'/><path d='M9 22V10h7a4 4 0 010 8h-7' fill='none' stroke='white' stroke-width='3'/></svg>">
+<style>
+  :root{--red:#e3262e;--ink:#16181d;--muted:#5b6170;--line:#e4e6eb;--bg:#f7f8fa;--ok:#1a7f45;--card:#fff}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+  a{color:var(--red)}
+  header{display:flex;align-items:center;justify-content:space-between;max-width:980px;margin:0 auto;padding:18px 20px}
+  .logo{display:flex;gap:10px;align-items:center;font-weight:700;font-size:19px;text-decoration:none;color:var(--ink)}
+  .logo span{display:grid;place-items:center;width:30px;height:30px;border-radius:7px;background:var(--red);color:#fff;font-size:15px}
+  nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:15px}
+  main{max-width:980px;margin:0 auto;padding:0 20px 60px}
+  .hero{text-align:center;padding:28px 0 22px}
+  h1{font-size:clamp(28px,4.6vw,44px);line-height:1.12;margin:0 0 12px;letter-spacing:-.02em}
+  .hero p{color:var(--muted);font-size:18px;max-width:640px;margin:0 auto}
+  .tool{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .drop{border:2px dashed #c9ccd4;border-radius:12px;padding:38px 16px;text-align:center;cursor:pointer;transition:.15s;background:#fcfcfd}
+  .drop.over{border-color:var(--red);background:#fff5f5}
+  .drop strong{font-size:18px}
+  .drop small{display:block;color:var(--muted);margin-top:6px}
+  .btn{display:inline-block;border:0;border-radius:10px;background:var(--red);color:#fff;font-weight:600;font-size:16px;padding:12px 22px;cursor:pointer;text-decoration:none}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .opts{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;margin:18px 0 4px}
+  .opts label{font-size:15px;color:var(--muted)}
+  select{font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+  .file{margin-top:14px;font-size:15px}
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:18px}
+  .status{margin-top:16px;font-size:15px}
+  .err{color:#b42318;background:#fef3f2;border:1px solid #fecdca;padding:10px 12px;border-radius:8px}
+  .spin{display:inline-block;width:16px;height:16px;border:2px solid #ddd;border-top-color:var(--red);border-radius:50%;animation:s 1s linear infinite;vertical-align:-3px;margin-right:8px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  .result{display:none;margin-top:22px;border-top:1px solid var(--line);padding-top:22px}
+  .done{color:var(--ok);font-weight:600;font-size:18px}
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+  .cmp figure{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  .cmp img{display:block;width:100%;height:auto}
+  .cmp figcaption{font-size:13px;color:var(--muted);padding:6px 10px;border-top:1px solid var(--line)}
+  .fb{margin-top:18px;padding:14px;border-radius:10px;background:var(--bg);font-size:15px}
+  .fb button{margin:8px 8px 0 0}
+  .points{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:30px 0}
+  .point{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .point b{display:block;margin-bottom:4px}
+  .point p{margin:0;color:var(--muted);font-size:15px}
+  h2{font-size:26px;margin:44px 0 12px;letter-spacing:-.01em}
+  ol.steps li{margin:6px 0}
+  details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:10px 0}
+  summary{cursor:pointer;font-weight:600}
+  details p{color:var(--muted);margin:10px 0 2px}
+  footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center;padding:24px 20px}
+  @media(max-width:600px){.cmp{grid-template-columns:1fr}nav{display:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+ {"@type":"Question","name":"Why does CorelDRAW say my PDF is corrupted?","acceptedAnswer":{"@type":"Answer","text":"CorelDRAW's PDF import is stricter than PDF viewers. Embedded fonts, newer PDF features or files edited by other tools often trigger the error, even when the PDF opens fine in a browser. Rebuilding the PDF in a simpler format with text as curves fixes most of them."}},
+ {"@type":"Question","name":"Will my colours or layout change?","acceptedAnswer":{"@type":"Answer","text":"No. CMYK colours are kept as they are, and pages keep their size and layout. The tool shows a before and after preview so you can check."}},
+ {"@type":"Question","name":"Can I still edit the text in CorelDRAW?","acceptedAnswer":{"@type":"Answer","text":"By default text is turned into curves, which fixes the most files but makes text non-editable. If you have the fonts installed and need to edit text, tick 'Keep text editable'."}},
+ {"@type":"Question","name":"Does it turn my pages into images?","acceptedAnswer":{"@type":"Answer","text":"No. Unlike many PDF-to-CDR converters, the output stays real vectors, so it prints sharp at any size and stays editable as shapes."}},
+ {"@type":"Question","name":"Are my files safe?","acceptedAnswer":{"@type":"Answer","text":"Files are processed automatically, never shared, and deleted from the server within 1 hour."}}
+]}
+</script>
+</head>
+<body>
+<header>
+  <a class="logo" href="/"><span>C</span>CorelPDFtools</a>
+  <nav><a href="#how">How it works</a><a href="#faq">FAQ</a></nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>CorelDRAW says your PDF is corrupted?<br>Fix it in seconds.</h1>
+    <p>Upload the PDF, download a CorelDRAW-ready copy. Real vectors, CMYK colours kept, nothing moved. Free.</p>
+  </section>
+
+  <section class="tool" aria-label="PDF fixer">
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose a PDF file">
+      <strong>Drop your PDF here</strong>
+      <small>or click to choose a file · up to <span id="maxmb">20</span> MB</small>
+      <input type="file" id="input" accept="application/pdf,.pdf" hidden>
+    </div>
+    <div class="file" id="fileinfo"></div>
+
+    <div class="opts">
+      <label>Your CorelDRAW version&nbsp;
+        <select id="preset"><option value="2017-2020">CorelDRAW 2017 to 2020</option></select>
+      </label>
+      <label><input type="checkbox" id="keep"> Keep text editable (only if you have the fonts)</label>
+    </div>
+
+    <div class="row"><button class="btn" id="go" disabled>Fix my PDF</button></div>
+    <div class="status" id="status" aria-live="polite"></div>
+
+    <div class="result" id="result">
+      <div class="done" id="donemsg">✓ Your PDF is ready for CorelDRAW</div>
+      <div class="cmp" id="cmp">
+        <figure><img id="before" alt="Page 1 of your original PDF"><figcaption>Before (page 1)</figcaption></figure>
+        <figure><img id="after" alt="Page 1 of the fixed PDF"><figcaption>After (page 1)</figcaption></figure>
+      </div>
+      <div class="row">
+        <a class="btn" id="dl" href="#" download>Download fixed PDF</a>
+        <button class="btn ghost" id="again">Fix another file</button>
+      </div>
+      <p style="color:var(--muted);font-size:14px">In CorelDRAW use <b>File → Import</b> (Ctrl+I). The download link works for <span id="ttl">60</span> minutes.</p>
+      <div class="fb" id="fb">
+        Did it open in CorelDRAW?<br>
+        <button class="btn ghost" data-ok="1">Yes, it opened</button>
+        <button class="btn ghost" data-ok="0">No, still an error</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="points">
+    <div class="point"><b>Real vectors, not images</b><p>Many PDF-to-CDR converters turn pages into JPGs. Your file stays sharp and editable as shapes.</p></div>
+    <div class="point"><b>Print colours kept</b><p>CMYK stays CMYK. Nothing is converted to RGB behind your back.</p></div>
+    <div class="point"><b>Works with old versions</b><p>Settings for CorelDRAW X4, X5, X6, X7, 2017–2020 and 2021+.</p></div>
+    <div class="point"><b>Files deleted in 1 hour</b><p>Processed automatically, never shared, then removed.</p></div>
+  </section>
+
+  <h2 id="how">How to fix a PDF that CorelDRAW won't open</h2>
+  <ol class="steps">
+    <li>Upload the PDF that shows <i>"The file is corrupted"</i> or won't import in CorelDRAW.</li>
+    <li>Pick your CorelDRAW version and click <b>Fix my PDF</b>.</li>
+    <li>Download the fixed PDF and open it with <b>File → Import</b> in CorelDRAW.</li>
+  </ol>
+  <p>The tool rebuilds the PDF in a simpler format that CorelDRAW reads reliably, turns text into curves so missing or damaged fonts can't break the import, and keeps the page at its print (trim) size. It works well for PDFs exported from Canva, Word, Illustrator and online design tools.</p>
+
+  <h2 id="faq">Questions</h2>
+  <details><summary>Why does CorelDRAW say my PDF is corrupted?</summary><p>CorelDRAW's PDF import is stricter than PDF viewers. Embedded fonts, newer PDF features or files edited by other tools often trigger the error, even when the PDF opens fine in Chrome or Acrobat.</p></details>
+  <details><summary>Will my colours or layout change?</summary><p>No. CMYK colours are kept, pages keep their size, and you can compare the before and after preview.</p></details>
+  <details><summary>Can I still edit the text?</summary><p>By default text becomes curves, which fixes the most files. If you have the fonts and need to edit text, tick “Keep text editable”.</p></details>
+  <details><summary>Does it work with Canva PDFs?</summary><p>Yes. Canva exports are one of the most common files CorelDRAW refuses, and this fix is built for them.</p></details>
+  <details><summary>Are my files safe?</summary><p>Files are processed automatically, never shared or used for anything else, and deleted within 1 hour.</p></details>
+</main>
+
+<footer>© <span id="yr"></span> CorelPDFtools · Not affiliated with Corel or Alludo. CorelDRAW is a trademark of its owner. · <a href="/privacy.html">Privacy</a></footer>
+
+<script>
+const $ = id => document.getElementById(id);
+let file = null, jobId = null;
+$('yr').textContent = new Date().getFullYear();
+
+fetch('/api/presets').then(r => r.json()).then(p => {
+  $('preset').innerHTML = p.presets.map(o => `<option value="${o.id}" ${o.id === p.default ? 'selected' : ''}>${o.label}</option>`).join('');
+  $('maxmb').textContent = p.max_upload_mb;
+}).catch(() => {});
+
+function pick(f) {
+  if (!f) return;
+  if (!/\.pdf$/i.test(f.name) && f.type !== 'application/pdf') { showErr('Please choose a PDF file.'); return; }
+  file = f;
+  $('fileinfo').textContent = `${f.name} · ${(f.size / 1048576).toFixed(1)} MB`;
+  $('go').disabled = false; $('status').innerHTML = '';
+}
+function showErr(msg) { $('status').innerHTML = `<div class="err">${msg.replace(/</g, '&lt;')}</div>`; }
+
+const drop = $('drop');
+drop.onclick = () => $('input').click();
+drop.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('input').click(); } };
+$('input').onchange = e => pick(e.target.files[0]);
+['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => pick(e.dataTransfer.files[0]));
+
+$('go').onclick = async () => {
+  if (!file) return;
+  $('go').disabled = true; $('result').style.display = 'none';
+  $('status').innerHTML = '<span class="spin"></span>Fixing your PDF… big files can take up to a minute.';
+  const fd = new FormData();
+  fd.append('file', file); fd.append('preset', $('preset').value); fd.append('keep_text', $('keep').checked);
+  try {
+    const r = await fetch('/api/fix', { method: 'POST', body: fd });
+    const j = await r.json().catch(() => ({ error: 'Unexpected server response.' }));
+    if (!r.ok) { showErr(j.error || 'Something went wrong.'); $('go').disabled = false; return; }
+    jobId = j.job_id;
+    $('status').innerHTML = '';
+    $('donemsg').textContent = `✓ Your PDF is ready for CorelDRAW (${j.pages} page${j.pages > 1 ? 's' : ''})`;
+    $('dl').href = j.download_url; $('dl').setAttribute('download', j.filename);
+    $('ttl').textContent = j.expires_in_minutes;
+    if (j.before_url && j.after_url) { $('before').src = j.before_url; $('after').src = j.after_url; $('cmp').style.display = ''; }
+    else $('cmp').style.display = 'none';
+    $('fb').innerHTML = 'Did it open in CorelDRAW?<br><button class="btn ghost" data-ok="1">Yes, it opened</button><button class="btn ghost" data-ok="0">No, still an error</button>';
+    $('result').style.display = 'block';
+  } catch (e) { showErr('Upload failed. Check your internet connection and try again.'); $('go').disabled = false; }
+};
+
+$('again').onclick = () => { file = null; $('input').value = ''; $('fileinfo').textContent = ''; $('result').style.display = 'none'; $('go').disabled = true; window.scrollTo({ top: 0, behavior: 'smooth' }); };
+
+$('fb').addEventListener('click', async e => {
+  const b = e.target.closest('button[data-ok]'); if (!b || !jobId) return;
+  const ok = b.dataset.ok === '1';
+  fetch('/api/feedback', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ job_id: jobId, opened: ok, corel_version: $('preset').value }) }).catch(() => {});
+  $('fb').innerHTML = ok ? 'Thanks! Glad it worked.' :
+    'Sorry about that. Try the setting for an older CorelDRAW version, or email the file to us so we can improve the fix.';
+});
+</script>
+</body>
+</html>
